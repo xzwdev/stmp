@@ -1,0 +1,9 @@
+
+default makefile is for linux platform.
+
+if you are using mingw on win32.
+
+  a). takeoff the -DLINUX macro in ./subdir.mk and ./stmp/subdir.mk
+  b). add -lws2_32 -liphlpapi in ./objects.mk
+
+xzwdev@qq.com
