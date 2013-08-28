@@ -71,16 +71,32 @@ public class StmpEnc
 		System.arraycopy(v, offset, sp.buff, sp.rm + tl + ll, length);
 	}
 
-	/** 添加一个PDU. */
-	public static final void addPdu(StmpPdu sp, short t, StmpPdu pdu)
+	/** 记住sp的当前位置, 将从这里准备开始添加一个子构造体的信元(这些信元必需都是简单体). */
+	public static final void setPoint(StmpPdu sp)
 	{
-		StmpEnc.addBin(sp, t, pdu.buff, pdu.rm, Stmp.STMP_PDU - pdu.rm);
+		sp.p = sp.rm;
 	}
 
 	/** 前置一个tag. */
 	public static final void addTag(StmpPdu sp, short t)
 	{
-		int len = Stmp.STMP_PDU - sp.rm;
+		StmpEnc.addTag__(sp, t, Stmp.STMP_PDU - sp.rm);
+	}
+
+	/** 前置一个tag, StmpEnc.setPoint总是应该在此函数之前调用. */
+	public static final void addTag4Point(StmpPdu sp, short t)
+	{
+		StmpEnc.addTag__(sp, t, sp.p - sp.rm);
+	}
+
+	/** 重置PDU位置指针. */
+	public static final void reset(StmpPdu pdu)
+	{
+		pdu.rm = Stmp.STMP_PDU;
+	}
+
+	private static final void addTag__(StmpPdu sp, short t, int len)
+	{
 		int ll = Stmp.tlvLen(len);
 		int tl;
 		if ((t & 0xFF00) != 0)
@@ -106,11 +122,5 @@ public class StmpEnc
 			System.arraycopy(new byte[] { Stmp.__STMP_LEN_0xFF__ }, 0, sp.buff, sp.rm + tl, 1);
 			System.arraycopy(Formatu.int2byte(len), 0, sp.buff, sp.rm + tl + 1, 4);
 		}
-	}
-
-	/** 重置PDU位置指针. */
-	public static final void reset(StmpPdu pdu)
-	{
-		pdu.rm = Stmp.STMP_PDU;
 	}
 }

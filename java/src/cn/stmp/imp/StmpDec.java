@@ -10,7 +10,7 @@ import cn.stmp.util.Log;
  */
 public final class StmpDec
 {
-	/** 从dat中解析出一个stmp_node结构. */
+	/** 从dat中解析出一个StmpNode结构. */
 	public static final StmpNode unpack(byte dat[])
 	{
 		StmpNode node = new StmpNode();
@@ -28,7 +28,7 @@ public final class StmpDec
 		return x.self.v;
 	}
 
-	/** 在指定的节点上返回一个uchar值. */
+	/** 在指定的节点上返回一个Byte值. */
 	public static final Byte getByte(StmpNode node, short tag)
 	{
 		StmpNode x = StmpDec.search(node, tag);
@@ -39,7 +39,7 @@ public final class StmpDec
 		return x.self.v[0];
 	}
 
-	/** 在指定的节点上返回一个字符串值, 返回的strlen(str) 一定 <= max, 超长部分将被截断. */
+	/** 在指定的节点上返回一个字符串值, 返回的String长度一定 <= max, 超长部分将被截断. */
 	public static final String getStr(StmpNode node, short tag, int max)
 	{
 		StmpNode x = StmpDec.search(node, tag);
@@ -50,7 +50,7 @@ public final class StmpDec
 		return new String(x.self.v, 0, x.self.l > max ? max : x.self.l);
 	}
 
-	/** 在指定的节点上返回一个ushort值. */
+	/** 在指定的节点上返回一个Short值. */
 	public static final Short getShort(StmpNode node, short tag)
 	{
 		StmpNode x = StmpDec.search(node, tag);
@@ -61,7 +61,7 @@ public final class StmpDec
 		return Formatu.byte2short(x.self.v, 0);
 	}
 
-	/** 在指定的节点上返回一个uint值. */
+	/** 在指定的节点上返回一个Integer值. */
 	public static Integer getInt(StmpNode node, short tag)
 	{
 		StmpNode x = StmpDec.search(node, tag);
@@ -72,7 +72,7 @@ public final class StmpDec
 		return Formatu.byte2int(x.self.v, 0);
 	}
 
-	/** 在指定的节点上返回一个long值. */
+	/** 在指定的节点上返回一个Long值. */
 	public static final Long getLong(StmpNode node, short tag)
 	{
 		StmpNode x = StmpDec.search(node, tag);

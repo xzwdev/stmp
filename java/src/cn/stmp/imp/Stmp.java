@@ -9,9 +9,10 @@ import java.util.HashMap;
  */
 public final class Stmp
 {
-	public static final int STMP_PDU = 0x1F000;
+	public static final int STMP_PDU = 0x1000;
 	public static final byte __STMP_LEN_0xFE__ = (byte) 0xFE;
 	public static final byte __STMP_LEN_0xFF__ = (byte) 0xFF;
+	private static final String __IEI_UNKNOWN__ = "IEI_UNKNOWN";
 	/** ----------------------------------------------------- */
 	/**                                                       */
 	/** 事务部分 */
@@ -155,7 +156,7 @@ public final class Stmp
 	public static final String tagDesc(short t)
 	{
 		String desc = Stmp.tags.get(t);
-		return desc == null ? "STMP_UNKNOWN" : desc;
+		return desc == null ? Stmp.__IEI_UNKNOWN__ : desc;
 	}
 
 	/** 获得len影响的l字段的长度, 可能的返回值是1, 表示l只需一个字表示, 3, 表示需两个字节表示(ushort), 5, 表示需4个字节表示(uint). */

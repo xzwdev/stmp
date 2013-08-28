@@ -8,6 +8,7 @@ package cn.stmp.imp;
 public class StmpPdu
 {
 	public int rm = Stmp.STMP_PDU;
+	public int p = 0;
 	public byte buff[] = new byte[Stmp.STMP_PDU];
 
 	public String toString()
