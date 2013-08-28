@@ -50,7 +50,6 @@ public class Main
 		int stid = 0xBEEFBEEF;
 		StmpEnc.addInt(begin, Stmp.STMP_TAG_STID, stid);
 		StmpEnc.addTag(begin, Stmp.STMP_TAG_TRANS_BEGIN);
-		//
 		System.out.println(begin);
 	}
 }

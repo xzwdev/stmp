@@ -117,7 +117,7 @@ public final class Stmp
 		tags.put(Stmp.STMP_TAG_TRANS_CANCEL, "TRANS_CANCEL");
 		tags.put(Stmp.STMP_TAG_TRANS_UNI, "TRANS_UNI");
 		//
-		tags.put(Stmp.STMP_TAG_STID, "TRANS_UNI");
+		tags.put(Stmp.STMP_TAG_STID, "STID");
 		tags.put(Stmp.STMP_TAG_DTID, "DTID");
 		tags.put(Stmp.STMP_TAG_RET, "RET");
 		tags.put(Stmp.STMP_TAG_REASON, "REASON");

@@ -7,7 +7,7 @@ package cn.stmp.imp;
  */
 public class StmpNode
 {
-	Tlv self = new Tlv();
-	StmpNode s = null;
-	StmpNode c = null;
+	public Tlv self = new Tlv();
+	public StmpNode s = null;
+	public StmpNode c = null;
 }

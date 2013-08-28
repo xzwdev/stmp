@@ -17,6 +17,109 @@ public final class StmpDec
 		return unpack__(dat, 0, dat.length, node) == 0 ? node : null;
 	}
 
+	/** 在指定的节点上返回一串二进制值, 如果找不到节点, return -1, 否则返回v的长度(可能为0), 超过max部分将被截断. */
+	public static final byte[] getBin(StmpNode node, short tag)
+	{
+		StmpNode x = StmpDec.search(node, tag);
+		if (x == null)
+			return null;
+		if (x.self.l == 0)
+			return null;
+		return x.self.v;
+	}
+
+	/** 在指定的节点上返回一个uchar值. */
+	public static final Byte getByte(StmpNode node, short tag)
+	{
+		StmpNode x = StmpDec.search(node, tag);
+		if (x == null)
+			return null;
+		if (x.self.l != 1)
+			return null;
+		return x.self.v[0];
+	}
+
+	/** 在指定的节点上返回一个字符串值, 返回的strlen(str) 一定 <= max, 超长部分将被截断. */
+	public static final String getStr(StmpNode node, short tag, int max)
+	{
+		StmpNode x = StmpDec.search(node, tag);
+		if (x == null)
+			return null;
+		if (x.self.l < 1)
+			return null;
+		return new String(x.self.v, 0, x.self.l > max ? max : x.self.l);
+	}
+
+	/** 在指定的节点上返回一个ushort值. */
+	public static final Short getShort(StmpNode node, short tag)
+	{
+		StmpNode x = StmpDec.search(node, tag);
+		if (x == null)
+			return null;
+		if (x.self.l != 2)
+			return null;
+		return Formatu.byte2short(x.self.v, 0);
+	}
+
+	/** 在指定的节点上返回一个uint值. */
+	public static Integer getInt(StmpNode node, short tag)
+	{
+		StmpNode x = StmpDec.search(node, tag);
+		if (x == null)
+			return null;
+		if (x.self.l != 4)
+			return null;
+		return Formatu.byte2int(x.self.v, 0);
+	}
+
+	/** 在指定的节点上返回一个long值. */
+	public static final Long getLong(StmpNode node, short tag)
+	{
+		StmpNode x = StmpDec.search(node, tag);
+		if (x == null)
+			return null;
+		if (x.self.l != 0x08)
+			return null;
+		long v = 0L;
+		long xx = x.self.v[0];
+		v |= (xx << 56) & 0xFF00000000000000L;
+		xx = x.self.v[1];
+		v |= (xx << 48) & 0x00FF000000000000L;
+		xx = x.self.v[2];
+		v |= (xx << 40) & 0x0000FF0000000000L;
+		xx = x.self.v[3];
+		v |= (xx << 32) & 0x000000FF00000000L;
+		xx = x.self.v[4];
+		v |= (xx << 24) & 0x00000000FF000000L;
+		xx = x.self.v[5];
+		v |= (xx << 16) & 0x0000000000FF0000L;
+		xx = x.self.v[6];
+		v |= (xx << 8) & 0x000000000000FF00L;
+		xx = x.self.v[7];
+		v |= (xx) & 0x00000000000000FFL;
+		return v;
+	}
+
+	/** 在node上查找一个子node. */
+	public static StmpNode getNode(StmpNode node, short tag)
+	{
+		return StmpDec.search(node, tag);
+	}
+
+	/** 仅仅搜索node和node的sibling, 而不往更深处搜索. */
+	private static final StmpNode search_s(StmpNode node, short tag)
+	{
+		if (node.self.t == tag)
+			return node;
+		return node.s == null ? null : StmpDec.search_s(node.s, tag);
+	}
+
+	/** 仅仅搜索node和node的child, 而不往更深处搜索. */
+	private static final StmpNode search(StmpNode node, short tag)
+	{
+		return node.c == null ? null : StmpDec.search_s(node.c, tag);
+	}
+
 	/** 报文解析. */
 	private static final int unpack__(byte dat[], int offset, int size, StmpNode node)
 	{
