@@ -14,6 +14,8 @@
 
 #include "stmp.h"
 
+LIBMISC_BEGIN_DECLS
+
 typedef struct stmp_node
 {
 	tlv self;
@@ -22,48 +24,50 @@ typedef struct stmp_node
 } stmp_node;
 
 /** 从dat中解析出一个stmp_node结构. */
-int stmpdec_unpack(uchar* dat, uint size, stmp_node* node);
+LIBMISC_EXPORT int stmpdec_unpack(uchar* dat, uint size, stmp_node* node);
 
 /** 在指定的节点上返回一串二进制值, 如果找不到节点, return -1, 否则返回v的长度(可能为0), 超过max部分将被截断. */
-int stmpdec_get_bin(stmp_node* node, ushort t, uchar* v, uint max);
+LIBMISC_EXPORT int stmpdec_get_bin(stmp_node* node, ushort t, uchar* v, uint max);
 
 /** 在指定的节点上返回一个uchar值. */
-int stmpdec_get_char(stmp_node* node, ushort t, uchar* v);
+LIBMISC_EXPORT int stmpdec_get_char(stmp_node* node, ushort t, uchar* v);
 
 /** 在指定的节点上返回一个字符串值, 返回的strlen(str) 一定 <= max, 超长部分将被截断. */
-int stmpdec_get_str(stmp_node* node, ushort t, char* str, uint max);
+LIBMISC_EXPORT int stmpdec_get_str(stmp_node* node, ushort t, char* str, uint max);
 
 /** 在指定的节点上返回一个ushort值. */
-int stmpdec_get_short(stmp_node* node, ushort t, ushort* v);
+LIBMISC_EXPORT int stmpdec_get_short(stmp_node* node, ushort t, ushort* v);
 
 /** 在指定的节点上返回一个uint值. */
-int stmpdec_get_int(stmp_node* node, ushort t, uint* v);
+LIBMISC_EXPORT int stmpdec_get_int(stmp_node* node, ushort t, uint* v);
 
 /** 在指定的节点上返回一个ullong值. */
-int stmpdec_get_long(stmp_node* node, ushort t, ullong* v);
+LIBMISC_EXPORT int stmpdec_get_long(stmp_node* node, ushort t, ullong* v);
 
 /** 在node上查找一个子node. */
-int stmpdec_get_node(stmp_node* node, ushort t, stmp_node** c);
+LIBMISC_EXPORT int stmpdec_get_node(stmp_node* node, ushort t, stmp_node** c);
 
 /** 释放一个stmp_node, 通常是释放root, 也就是根结点. */
-void stmpdec_free(stmp_node* root);
+LIBMISC_EXPORT void stmpdec_free(stmp_node* root);
 
 /** 打印一个节点到标准输出.*/
-void stmpdec_printnode(stmp_node* node);
+LIBMISC_EXPORT void stmpdec_printnode(stmp_node* node);
 
 /** 打印一个节点到str.*/
-void stmpdec_printnode2str(stmp_node* node, char* str);
+LIBMISC_EXPORT void stmpdec_printnode2str(stmp_node* node, char* str);
 
 /** 解包, 并打印到标准输出. */
-void stmpdec_printf(uchar* dat, uint size);
+LIBMISC_EXPORT void stmpdec_printf(uchar* dat, uint size);
 
 /** 解包, 并打印到标准输出. */
-void stmpdec_printpdu(stmp_pdu* pdu);
+LIBMISC_EXPORT void stmpdec_printpdu(stmp_pdu* pdu);
 
 /** 解包, 并打印到str. */
-void stmpdec_print2str(uchar* data, uint size, char* str);
+LIBMISC_EXPORT void stmpdec_print2str(uchar* data, uint size, char* str);
 
 /** 解包, 并打印到str. */
-void stmpdec_printpdu2str(stmp_pdu* pdu, char* str);
+LIBMISC_EXPORT void stmpdec_printpdu2str(stmp_pdu* pdu, char* str);
+
+LIBMISC_END_DECLS
 
 #endif /* STMPDEC_H_ */

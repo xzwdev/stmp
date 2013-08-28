@@ -28,6 +28,7 @@ typedef struct
 typedef struct
 {
 	int rm;
+	uint p;
 #define STMP_PDU									0x1000
 	uchar buff[STMP_PDU];
 } stmp_pdu;
@@ -82,9 +83,11 @@ typedef struct
 #define STMP_TAG_HOST										0x71		/** 主机信息. */
 #define STMP_TAG_BASE										0x72		/** 基本信息. */
 
-char* stmp_tag_desc(ushort t);
+/** 返回tag的字符串描述形式. */
+LIBMISC_EXPORT char* stmp_tag_desc(ushort t);
 
-unsigned char stmp_tlv_len(uint len);
+/** 获得len导致的length字段的长度. */
+LIBMISC_EXPORT unsigned char stmp_tlv_len(uint len);
 
 #include "stmpenc.h"
 #include "stmpdec.h"
